@@ -1,4 +1,5 @@
-# trapd00r.zsh-theme
+# Name:   trapd00r zsh theme
+# Author: Magnus Woldrich <m@japh.se>
 #
 # This theme needs a terminal supporting 256 colors as well as unicode. It also
 # needs the script that splits up the current path and makes it fancy as located

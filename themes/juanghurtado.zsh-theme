@@ -1,4 +1,7 @@
-# Needs Git plugin for current_branch method
+# ------------------------------------------------------------------------
+# Juan G. Hurtado oh-my-zsh theme
+# (Needs Git plugin for current_branch method)
+# ------------------------------------------------------------------------
 
 # Color shortcuts
 RED=$fg[red]
