@@ -31,7 +31,7 @@ prompt_segment() {
 
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
-    echo -n "%{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR "
+    echo -n "%{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
   else
     echo -n "%{%k%}"
   fi
@@ -54,12 +54,12 @@ prompt_git() {
   fi
 }
 
-prompt_home() {
+prompt_user() {
   prompt_segment black white ' %n '
 }
 
 prompt_dir() {
-  prompt_segment cyan white ' %c '
+  prompt_segment cyan white ' %3c '
 }
 
 prompt_time() {
@@ -69,7 +69,7 @@ prompt_time() {
 build_prompt() {
   RETVAL=$?
   prompt_time
-  prompt_home
+  prompt_user
   prompt_dir
   prompt_end
 }
