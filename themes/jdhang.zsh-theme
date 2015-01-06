@@ -58,7 +58,7 @@ prompt_git() {
     if [[ -n $dirty ]]; then
       prompt_segment yellow black
     else
-      prompt_segment green white
+      prompt_segment green black 
     fi
     echo -n " ${ref/refs\/heads\// }$dirty "
   fi
