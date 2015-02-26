@@ -5,7 +5,7 @@
 # A Powerline-inspired theme for ZSH
 #
 # Based on ranman's Theme - https://github.com/ranman/oh-my-zsh/blob/master/themes/ranman.zsh-theme
-# this is version that doesn't use special characters 
+# this is version that doesn't use special characters
 #
 # # README
 #
@@ -58,13 +58,18 @@ prompt_git() {
     if [[ -n $dirty ]]; then
       prompt_segment yellow black
     else
-      prompt_segment green black 
+      prompt_segment green black
     fi
     echo -n " ${ref/refs\/heads\// }$dirty "
   fi
 }
 
-PROMPT='%K{blue}%F{white} %T %k%f%K{black}%F{white} %n %k%f%K{cyan}%F{white} %3c %k%f '
+ruby_version () {
+  rbenv_ruby_version=`rbenv version | sed -e 's/ .*//'`
+  printf $rbenv_ruby_version
+}
+
+PROMPT='%K{blue}%F{white} %T %k%f%K{black}%F{white} %n %k%f%K{cyan}%F{white} %3c %k%f%K{red}%F{white} $(ruby_version) %k%f '
 RPROMPT='$(prompt_git)'
 
 # RPROMPT='%F{white}[ $(git_prompt_info) $(git_prompt_status)%F{white}]%f'
