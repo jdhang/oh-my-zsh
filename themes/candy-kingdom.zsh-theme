@@ -20,7 +20,11 @@ patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset
 }
 
 function box_name {
+<<<<<<< HEAD
     [ -f ~/.box-name ] && cat ~/.box-name || hostname -s
+=======
+    [ -f ~/.box-name ] && cat ~/.box-name || echo ${SHORT_HOST:-$HOST}
+>>>>>>> d310fac7f65d31f7494532201e02ebf67c9d9555
 }
 
 PROMPT='

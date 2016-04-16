@@ -15,11 +15,21 @@ ZSH_THEME_GIT_PROMPT_MODIFIED="%{$fg[yellow]%}✱"
 ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}✗"
 ZSH_THEME_GIT_PROMPT_RENAMED="%{$fg[blue]%}➦"
 ZSH_THEME_GIT_PROMPT_UNMERGED="%{$fg[magenta]%}✂"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[grey]%}✈"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[blue]%}✈"
+ZSH_THEME_GIT_PROMPT_SHA_BEFORE=" %{$fg[blue]%}"
+ZSH_THEME_GIT_PROMPT_SHA_AFTER="%{$reset_color%}"
 
 function mygit() {
+<<<<<<< HEAD
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
   echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$( git_prompt_status )%{$reset_color%}$ZSH_THEME_GIT_PROMPT_SUFFIX"
+=======
+  if [[ "$(git config --get oh-my-zsh.hide-status)" != "1" ]]; then
+    ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
+    ref=$(command git rev-parse --short HEAD 2> /dev/null) || return
+    echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$(git_prompt_short_sha)$( git_prompt_status )%{$reset_color%}$ZSH_THEME_GIT_PROMPT_SUFFIX "
+  fi
+>>>>>>> d310fac7f65d31f7494532201e02ebf67c9d9555
 }
 
 function retcode() {}

@@ -1,8 +1,11 @@
 #-------------------------------------------------------------------------------
 # Sunrise theme for oh-my-zsh by Adam Lindberg (eproxus@gmail.com)
 # Intended to be used with Solarized: http://ethanschoonover.com/solarized
+<<<<<<< HEAD
 # (Needs Git plugin for current_branch method)
 #-------------------------------------------------------------------------------
+=======
+>>>>>>> d310fac7f65d31f7494532201e02ebf67c9d9555
 
 # Color shortcuts
 R=$fg_no_bold[red]
@@ -12,10 +15,15 @@ Y=$fg_no_bold[yellow]
 B=$fg_no_bold[blue]
 RESET=$reset_color
 
+<<<<<<< HEAD
 if [ "$(whoami)" = "root" ]; then
     PROMPTCOLOR="%{$R%}" PREFIX="-!-";
+=======
+if [ "$USER" = "root" ]; then
+    PROMPTCOLOR="%{$R%}" PROMPTPREFIX="-!-";
+>>>>>>> d310fac7f65d31f7494532201e02ebf67c9d9555
 else
-    PROMPTCOLOR="" PREFIX="---";
+    PROMPTCOLOR="" PROMPTPREFIX="---";
 fi
 
 local return_code="%(?..%{$R%}%? ↵%{$RESET%})"
@@ -69,7 +77,7 @@ function custom_git_prompt() {
 }
 
 # %B sets bold text
-PROMPT='%B$PREFIX %2~ $(custom_git_prompt)%{$M%}%B»%b%{$RESET%} '
+PROMPT='%B$PROMPTPREFIX %2~ $(custom_git_prompt)%{$M%}%B»%b%{$RESET%} '
 RPS1="${return_code}"
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$Y%}‹"

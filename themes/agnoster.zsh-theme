@@ -6,7 +6,14 @@
 # # README
 #
 # In order for this theme to render correctly, you will need a
+<<<<<<< HEAD
 # [Powerline-patched font](https://gist.github.com/1595572).
+=======
+# [Powerline-patched font](https://github.com/Lokaltog/powerline-fonts).
+# Make sure you have a recent version: the code points that Powerline
+# uses changed in 2012, and older versions will display incorrectly,
+# in confusing ways.
+>>>>>>> d310fac7f65d31f7494532201e02ebf67c9d9555
 #
 # In addition, I recommend the
 # [Solarized theme](https://github.com/altercation/solarized/) and, if you're
@@ -26,7 +33,23 @@
 # A few utility functions to make it easy and re-usable to draw segmented prompts
 
 CURRENT_BG='NONE'
-SEGMENT_SEPARATOR=''
+
+# Special Powerline characters
+
+() {
+  local LC_ALL="" LC_CTYPE="en_US.UTF-8"
+  # NOTE: This segment separator character is correct.  In 2012, Powerline changed
+  # the code points they use for their special characters. This is the new code point.
+  # If this is not working for you, you probably have an old version of the
+  # Powerline-patched fonts installed. Download and install the new version.
+  # Do not submit PRs to change this unless you have reviewed the Powerline code point
+  # history and have new information.
+  # This is defined using a Unicode escape sequence so it is unambiguously readable, regardless of
+  # what font the user is viewing this source code in. Do not replace the
+  # escape sequence with a single literal character.
+  # Do not change this! Do not make it '\u2b80'; that is the old, wrong code point.
+  SEGMENT_SEPARATOR=$'\ue0b0'
+}
 
 # Begin a segment
 # Takes two arguments, background and foreground. Both can be omitted,
@@ -69,10 +92,22 @@ prompt_context() {
 
 # Git: branch/detached head, dirty status
 prompt_git() {
+<<<<<<< HEAD
   local ref dirty
+=======
+
+  local PL_BRANCH_CHAR
+  () {
+    local LC_ALL="" LC_CTYPE="en_US.UTF-8"
+    PL_BRANCH_CHAR=$'\ue0a0'         # 
+  }
+  local ref dirty mode repo_path
+  repo_path=$(git rev-parse --git-dir 2>/dev/null)
+
+>>>>>>> d310fac7f65d31f7494532201e02ebf67c9d9555
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
     dirty=$(parse_git_dirty)
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git rev-parse --short HEAD 2> /dev/null)"
     if [[ -n $dirty ]]; then
       prompt_segment yellow black
     else
@@ -86,11 +121,15 @@ prompt_git() {
     zstyle ':vcs_info:*' get-revision true
     zstyle ':vcs_info:*' check-for-changes true
     zstyle ':vcs_info:*' stagedstr '✚'
-    zstyle ':vcs_info:git:*' unstagedstr '●'
+    zstyle ':vcs_info:*' unstagedstr '●'
     zstyle ':vcs_info:*' formats ' %u%c'
     zstyle ':vcs_info:*' actionformats '%u%c'
     vcs_info
+<<<<<<< HEAD
     echo -n "${ref/refs\/heads\//± }${vcs_info_msg_0_}"
+=======
+    echo -n "${ref/refs\/heads\//$PL_BRANCH_CHAR }${vcs_info_msg_0_%% }${mode}"
+>>>>>>> d310fac7f65d31f7494532201e02ebf67c9d9555
   fi
 }
 
@@ -118,7 +157,11 @@ prompt_hg() {
       if `hg st | grep -Eq "^\?"`; then
         prompt_segment red black
         st='±'
+<<<<<<< HEAD
       elif `hg st | grep -Eq "^(M|A)"`; then
+=======
+      elif `hg st | grep -q "^[MA]"`; then
+>>>>>>> d310fac7f65d31f7494532201e02ebf67c9d9555
         prompt_segment yellow black
         st='±'
       else
