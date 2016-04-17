@@ -1,5 +1,5 @@
 #➤ ᐅ⮀⮂▶◀⮁⮃
-
+#
 # vim:ft=zsh ts=2 sw=2 sts=2
 #
 # Based on agnoster's Theme - https://gist.github.com/3712874
@@ -41,9 +41,12 @@ autoload -U add-zsh-hook
 # ZSH_THEME_GIT_PROMPT_CLEAN=" $FG[077]✔%f"
 
 CURRENT_BG='NONE'
-SEGMENT_SEPARATOR='⮀'
+SEGMENT_SEPARATOR='\ue0b0'
 SEGMENT_SEPARATOR_SKINNY='⮁'
 SEGMENT_SEPARATOR_LEFT='⮂ '
+DIRTY='✘'
+CLEAN='✔'
+
 
 prompt_segment() {
   local bg fg
@@ -79,7 +82,7 @@ prompt_git() {
     else
       prompt_segment green white
     fi
-    echo -n "${ref/refs\/heads\//⭠ }$dirty "
+    echo -n "${ref/refs\/heads\/}$dirty "
   fi
 }
 
