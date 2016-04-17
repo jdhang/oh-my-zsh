@@ -69,7 +69,8 @@ ruby_version () {
   printf $rbenv_ruby_version
 }
 
-PROMPT='%K{blue}%F{white} %T %k%f%K{black}%F{white} %n %k%f%K{cyan}%F{white} %3c %k%f%K{red}%F{white} $(ruby_version) %k%f '
+ # PROMPT='%K{blue}%F{white} %T %k%f%K{black}%F{white} %n %k%f%K{cyan}%F{white} %3c %k%f%K{red}%F{white} $(ruby_version) %k%f '
+PROMPT='%K{blue}%F{white} %T %k%f%K{black}%F{white} %n %k%f%K{cyan}%F{white} %3c %k%f '
 RPROMPT='$(prompt_git)'
 
 # RPROMPT='%F{white}[ $(git_prompt_info) $(git_prompt_status)%F{white}]%f'
