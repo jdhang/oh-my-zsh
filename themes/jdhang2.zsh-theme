@@ -44,8 +44,14 @@ CURRENT_BG='NONE'
 SEGMENT_SEPARATOR='\ue0b0'
 SEGMENT_SEPARATOR_SKINNY='⮁'
 SEGMENT_SEPARATOR_LEFT='⮂ '
-DIRTY='✘'
-CLEAN='✔'
+DIRTY=' ✘'
+CLEAN=' ✔'
+PLUSMINUS="\u00b1"
+BRANCH="\ue0a0 "
+DETACHED="\u27a6"
+CROSS="\u2718"
+LIGHTNING="\u26a1"
+GEAR="\u2699"
 
 
 prompt_segment() {
@@ -71,18 +77,20 @@ prompt_end() {
   CURRENT_BG=''
 }
 
-prompt_git() {
+
+ prompt_git() {
   local ref dirty
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
-    ZSH_THEME_GIT_PROMPT_DIRTY='±'
+    ZSH_THEME_GIT_PROMPT_DIRTY=$DIRTY
+    ZSH_THEME_GIT_PROMPT_CLEAN=$CLEAN
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
-    if [[ -n $dirty ]]; then
+    if [[ $dirty = $DIRTY ]]; then
       prompt_segment yellow black
     else
       prompt_segment green white
     fi
-    echo -n "${ref/refs\/heads\/}$dirty "
+    echo -n "${ref/refs\/heads\//$BRANCH}$dirty "
   fi
 }
 
