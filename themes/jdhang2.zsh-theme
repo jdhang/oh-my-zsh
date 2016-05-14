@@ -42,6 +42,7 @@ autoload -U add-zsh-hook
 
 CURRENT_BG='NONE'
 SEGMENT_SEPARATOR='\ue0b0'
+RIGHT_SEGMENT_SEPARATOR='\ue0b2'
 SEGMENT_SEPARATOR_SKINNY='⮁'
 SEGMENT_SEPARATOR_LEFT='⮂ '
 DIRTY=' ✘'
@@ -67,6 +68,19 @@ prompt_segment() {
   [[ -n $3 ]] && echo -n $3
 }
 
+prompt_right_segment() {
+  local bg fg
+  [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
+  [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
+  if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
+    echo -n "%{$bg%F{$CURRENT_BG}%}$RIGHT_SEGMENT_SEPARATOR%{$fg%}"
+  else
+    echo -n "%{$bg%}%{$fg%} "
+  fi
+  CURRENT_BG=$1
+  [[ -n $3 ]] && echo -n $3
+}
+
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
     echo -n "%{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
@@ -75,6 +89,19 @@ prompt_end() {
   fi
   echo -n "%{%f%}"
   CURRENT_BG=''
+}
+
+prompt_start() {
+  [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
+  [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
+  CURRENT_BG=$1
+  if [[ -n $CURRENT_BG ]]; then
+    echo -n "%{%k%F{$CURRENT_BG}%}$RIGHT_SEGMENT_SEPARATOR"
+  else
+    echo -n "%{%k%}$RIGHT_SEGMENT_SEPARATOR"
+  fi
+  echo -n "%{%f%}"
+  CURRENT_BG=$1
 }
 
 
@@ -86,11 +113,14 @@ prompt_end() {
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
     if [[ $dirty = $DIRTY ]]; then
-      prompt_segment yellow black
+      prompt_start yellow
+      prompt_right_segment yellow black
     else
-      prompt_segment green white
+      prompt_start green
+      prompt_right_segment green white
     fi
-    echo -n "${ref/refs\/heads\//$BRANCH}$dirty "
+    echo -n " ${ref/refs\/heads\//$BRANCH}$dirty "
+    # echo -n "${ref/refs\/heads\/}$dirty "
   fi
 }
 
@@ -114,5 +144,9 @@ build_prompt() {
   prompt_end
 }
 
-RPROMPT='$(prompt_git)'
+build_right_prompt() {
+  prompt_git
+}
+
+RPROMPT='$(build_right_prompt)'
 PROMPT='$(build_prompt) '
